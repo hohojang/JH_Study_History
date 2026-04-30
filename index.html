@@ -3,32 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JH_Study_History | 한능검 1급 정복</title>
+    <title>JH_Study_History | 한능검 1급 실전</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <nav>
-        <div class="logo">JH_Study_History</div>
-        <ul id="nav-links">
-            <li onclick="filterEra('전체')">전체</li>
-            <li onclick="filterEra('선사')">선사</li>
-            <li onclick="filterEra('연맹국가')">연맹국가</li>
-            <li onclick="filterEra('삼국')">삼국</li>
-        </ul>
+        <div class="logo">JH_Study_History V2</div>
+        <div class="stats">
+            정답: <span id="score-count">0</span> | 진도: <span id="progress-count">0</span>/60
+        </div>
     </nav>
 
     <header>
-        <h1>합격 기원 JANGHO</h1>
-        <p>목표: 한능검 1급 (80~90점) | 퇴사 D-Day: 2026.05.31</p>
+        <h1>한능검 심화 1급 격파 작전</h1>
+        <div class="mode-selector">
+            <button onclick="startStudy('전근대사')">전근대사 30</button>
+            <button onclick="startStudy('근현대사')">근현대사 30</button>
+        </div>
     </header>
 
-    <main id="history-container">
-        <!-- 자바스크립트가 여기에 카드를 생성합니다 -->
+    <main>
+        <div id="quiz-container">
+            <!-- 자바스크립트가 여기에 문제를 생성합니다 -->
+            <div class="welcome-msg">
+                위의 버튼을 눌러 작전을 개시하십시오!
+            </div>
+        </div>
     </main>
-
-    <footer>
-        <p>© 2026 PARK JANG HO. All rights reserved.</p>
-    </footer>
 
     <script src="data.js"></script>
     <script src="script.js"></script>
