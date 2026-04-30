@@ -16,7 +16,7 @@ function renderQuiz() {
     if (currentIndex >= currentQuestions.length) {
         container.innerHTML = `
             <div class="quiz-card" style="text-align:center;">
-                <h2>전투 종료!</h2>
+                <h2>문제 풀이 종료!</h2>
                 <p style="font-size: 1.5rem;">최종 점수: <span style="color:var(--accent)">${score}/${currentQuestions.length}</span></p>
                 <button class="opt-btn" style="text-align:center; display:inline-block;" onclick="location.reload()">처음으로 돌아가기</button>
             </div>`;
@@ -50,7 +50,7 @@ function checkAnswer(choice) {
     
     if (choice.toString() === q.answer) {
         msg.style.backgroundColor = "var(--correct)";
-        msg.innerText = "정답입니다! 필승!";
+        msg.innerText = "정답입니다! 다음 문제로 넘어갑니다.";
         score++;
         document.getElementById('score-count').innerText = score;
         setTimeout(() => {
