@@ -14,15 +14,19 @@ function startStudy(category) {
 function renderQuiz() {
     const container = document.getElementById('quiz-container');
     if (currentIndex >= currentQuestions.length) {
-        container.innerHTML = `<h2>전투 종료! 총점: ${score}/${currentQuestions.length}</h2>
-                               <button onclick="location.reload()">다시 시작</button>`;
+        container.innerHTML = `
+            <div class="quiz-card" style="text-align:center;">
+                <h2>전투 종료!</h2>
+                <p style="font-size: 1.5rem;">최종 점수: <span style="color:var(--accent)">${score}/${currentQuestions.length}</span></p>
+                <button class="opt-btn" style="text-align:center; display:inline-block;" onclick="location.reload()">처음으로 돌아가기</button>
+            </div>`;
         return;
     }
 
     const q = currentQuestions[currentIndex];
     container.innerHTML = `
-        <div class="quiz-card animate-fade">
-            <span style="color: var(--accent)">[${q.era}]</span>
+        <div class="quiz-card">
+            <span style="color: var(--accent); font-weight:bold;">[${q.era}]</span>
             <p class="question">${q.question}</p>
             <div class="options-grid">
                 ${q.options.map((opt, i) => `
@@ -30,7 +34,7 @@ function renderQuiz() {
                 `).join('')}
             </div>
             <div class="action-area">
-                <div id="result-msg"></div>
+                <div id="result-msg" class="result-msg" style="display:none;"></div>
                 <button class="btn-hint" onclick="toggleHint()">🔍 힌트 보기</button>
                 <div id="hint-box" class="hint-box">${q.hint}</div>
             </div>
@@ -42,6 +46,7 @@ function renderQuiz() {
 function checkAnswer(choice) {
     const q = currentQuestions[currentIndex];
     const msg = document.getElementById('result-msg');
+    msg.style.display = "block";
     
     if (choice.toString() === q.answer) {
         msg.style.backgroundColor = "var(--correct)";

@@ -22,6 +22,52 @@ nav {
 
 .stats { font-weight: bold; color: var(--accent); }
 
+/* 프로필 섹션 스타일 */
+.dev-profile {
+    background: #1e293b;
+    border-bottom: 1px solid #334155;
+    padding: 1.5rem 2rem;
+}
+
+.profile-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.dev-tag {
+    background: var(--accent);
+    color: #000;
+    font-size: 0.7rem;
+    font-weight: bold;
+    padding: 0.2rem 0.6rem;
+    border-radius: 20px;
+    text-transform: uppercase;
+}
+
+.profile-info h2 { margin: 0.5rem 0 0.2rem 0; font-size: 1.5rem; letter-spacing: 1px; }
+.profile-info p { margin: 0; font-size: 0.9rem; color: #94a3b8; }
+
+.project-links { margin-top: 0.8rem; }
+.project-links a {
+    color: var(--accent); text-decoration: none; font-size: 0.8rem;
+    margin-right: 1rem; border: 1px solid var(--accent);
+    padding: 0.2rem 0.5rem; border-radius: 4px; transition: 0.3s;
+}
+.project-links a:hover { background: var(--accent); color: #000; }
+
+.status-box {
+    text-align: right; background: #020617; padding: 1rem;
+    border-radius: 12px; border: 1px solid var(--accent);
+}
+
+.status-label { display: block; font-size: 0.7rem; color: #94a3b8; margin-bottom: 0.3rem; }
+.status-value { font-size: 1.2rem; font-weight: bold; color: var(--accent); }
+
 header { text-align: center; padding: 2rem; }
 .mode-selector button {
     padding: 0.8rem 1.5rem; margin: 0.5rem; border: none; border-radius: 8px;
@@ -30,13 +76,8 @@ header { text-align: center; padding: 2rem; }
 
 #quiz-container { max-width: 700px; margin: 0 auto; padding: 1rem; }
 
-.quiz-card {
-    background: var(--card-bg); padding: 2rem; border-radius: 16px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-}
-
+.quiz-card { background: var(--card-bg); padding: 2rem; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
 .question { font-size: 1.2rem; margin-bottom: 1.5rem; white-space: pre-wrap; line-height: 1.6; }
-
 .options-grid { display: grid; gap: 0.8rem; }
 .opt-btn {
     padding: 1rem; text-align: left; background: #334155; border: 1px solid #475569;
@@ -45,14 +86,11 @@ header { text-align: center; padding: 2rem; }
 .opt-btn:hover { background: #475569; }
 
 .action-area { margin-top: 1.5rem; display: flex; gap: 1rem; flex-direction: column; }
-.hint-box {
-    background: #451a03; border-left: 4px solid var(--hint-color);
-    padding: 1rem; border-radius: 4px; display: none; margin-top: 1rem;
-}
+.hint-box { background: #451a03; border-left: 4px solid var(--hint-color); padding: 1rem; border-radius: 4px; display: none; margin-top: 1rem; }
+.btn-hint { background: none; border: 1px solid var(--hint-color); color: var(--hint-color); padding: 0.5rem; border-radius: 4px; cursor: pointer; }
+.result-msg { font-weight: bold; padding: 1rem; border-radius: 8px; text-align: center; color: white; }
 
-.btn-hint {
-    background: none; border: 1px solid var(--hint-color); color: var(--hint-color);
-    padding: 0.5rem; border-radius: 4px; cursor: pointer;
+@media (max-width: 600px) {
+    .profile-container { flex-direction: column; text-align: center; }
+    .status-box { width: 100%; text-align: center; }
 }
-
-.result-msg { font-weight: bold; padding: 1rem; border-radius: 8px; text-align: center; }
