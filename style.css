@@ -11,22 +11,24 @@
 body {
     background-color: var(--bg-color);
     color: var(--text-color);
-    font-family: 'Pretendard', system-ui, sans-serif;
+    font-family: 'Pretendard', system-ui, -apple-system, sans-serif;
     margin: 0;
+    line-height: 1.6;
 }
 
 nav {
     display: flex; justify-content: space-between; align-items: center;
-    padding: 1rem 2rem; background: #020617; position: sticky; top: 0; z-index: 100;
+    padding: 1rem 2rem; background: rgba(2, 6, 23, 0.95); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 100;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
 .stats { font-weight: bold; color: var(--accent); }
 
 /* 프로필 섹션 스타일 */
 .dev-profile {
-    background: #1e293b;
-    border-bottom: 1px solid #334155;
-    padding: 1.5rem 2rem;
+    background: linear-gradient(135deg, #1e293b, #334155);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding: 2rem 2rem;
 }
 
 .profile-container {
@@ -68,22 +70,44 @@ nav {
 .status-label { display: block; font-size: 0.7rem; color: #94a3b8; margin-bottom: 0.3rem; }
 .status-value { font-size: 1.2rem; font-weight: bold; color: var(--accent); }
 
-header { text-align: center; padding: 2rem; }
+header { text-align: center; padding: 3rem; }
 .mode-selector button {
-    padding: 0.8rem 1.5rem; margin: 0.5rem; border: none; border-radius: 8px;
-    background: var(--accent); color: white; cursor: pointer; font-weight: bold;
+    padding: 1rem 2rem; margin: 0.5rem; border: none; border-radius: 12px;
+    background: linear-gradient(135deg, var(--accent), #00a8cc); color: white; cursor: pointer; font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3);
+}
+.mode-selector button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(56, 189, 248, 0.5);
 }
 
-#quiz-container { max-width: 700px; margin: 0 auto; padding: 1rem; }
+#quiz-container { max-width: 800px; margin: 0 auto; padding: 2rem; }
 
-.quiz-card { background: var(--card-bg); padding: 2rem; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
+.quiz-card { 
+    background: var(--card-bg); 
+    padding: 2.5rem; 
+    border-radius: 20px; 
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.1); 
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.quiz-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.2);
+}
 .question { font-size: 1.2rem; margin-bottom: 1.5rem; white-space: pre-wrap; line-height: 1.6; }
 .options-grid { display: grid; gap: 0.8rem; }
 .opt-btn {
     padding: 1rem; text-align: left; background: #334155; border: 1px solid #475569;
-    color: white; border-radius: 8px; cursor: pointer; transition: 0.2s;
+    color: white; border-radius: 12px; cursor: pointer; transition: all 0.3s ease;
+    font-size: 1rem;
 }
-.opt-btn:hover { background: #475569; }
+.opt-btn:hover { 
+    background: #475569; 
+    transform: translateX(5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
 
 .action-area { margin-top: 1.5rem; display: flex; gap: 1rem; flex-direction: column; }
 .hint-box { background: #451a03; border-left: 4px solid var(--hint-color); padding: 1rem; border-radius: 4px; display: none; margin-top: 1rem; }
