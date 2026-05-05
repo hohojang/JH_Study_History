@@ -110,8 +110,15 @@ header { text-align: center; padding: 3rem; }
 }
 
 .action-area { margin-top: 1.5rem; display: flex; gap: 1rem; flex-direction: column; }
+.button-group { display: flex; flex-wrap: wrap; gap: 0.75rem; }
 .hint-box { background: #451a03; border-left: 4px solid var(--hint-color); padding: 1rem; border-radius: 4px; display: none; margin-top: 1rem; }
-.btn-hint { background: none; border: 1px solid var(--hint-color); color: var(--hint-color); padding: 0.5rem; border-radius: 4px; cursor: pointer; }
+.solution-panel { background: rgba(15, 23, 42, 0.95); border: 1px solid rgba(255,255,255,0.12); padding: 1rem; border-radius: 14px; display: none; margin-top: 1rem; max-height: 360px; overflow-y: auto; }
+.solution-item { margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.08); }
+.solution-title { margin: 0 0 0.35rem 0; font-weight: 700; }
+.solution-answer { margin: 0 0 0.25rem 0; color: var(--accent); }
+.solution-explanation { margin: 0; color: #cbd5e1; }
+.btn-hint, .btn-solution { background: none; border: 1px solid var(--hint-color); color: var(--hint-color); padding: 0.5rem 0.8rem; border-radius: 4px; cursor: pointer; }
+.btn-solution:hover, .btn-hint:hover { opacity: 0.9; }
 .result-msg { font-weight: bold; padding: 1rem; border-radius: 8px; text-align: center; color: white; }
 
 @media (max-width: 600px) {

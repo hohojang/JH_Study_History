@@ -1,11 +1,13 @@
 let currentQuestions = [];
 let currentIndex = 0;
 let score = 0;
+let solutionsVisible = false;
 
 function startStudy(category) {
     currentQuestions = historyData.filter(q => q.category === category);
     currentIndex = 0;
     score = 0;
+    solutionsVisible = false;
     document.getElementById('score-count').innerText = score;
     document.getElementById('progress-count').innerText = 0;
     renderQuiz();
@@ -35,8 +37,14 @@ function renderQuiz() {
             </div>
             <div class="action-area">
                 <div id="result-msg" class="result-msg" style="display:none;"></div>
-                <button class="btn-hint" onclick="toggleHint()">🔍 힌트 보기</button>
+                <div class="button-group">
+                    <button class="btn-hint" onclick="toggleHint()">🔍 힌트 보기</button>
+                    <button class="btn-solution" onclick="toggleSolutions()">📖 정답/풀이 보기</button>
+                </div>
                 <div id="hint-box" class="hint-box">${q.hint}</div>
+                <div id="solution-panel" class="solution-panel" style="display: ${solutionsVisible ? 'block' : 'none'};">
+                    ${renderSolutionsHtml()}
+                </div>
             </div>
         </div>
     `;
@@ -66,4 +74,28 @@ function checkAnswer(choice) {
 function toggleHint() {
     const hb = document.getElementById('hint-box');
     hb.style.display = hb.style.display === 'block' ? 'none' : 'block';
+}
+
+function toggleSolutions() {
+    solutionsVisible = !solutionsVisible;
+    const panel = document.getElementById('solution-panel');
+    if (panel) {
+        panel.style.display = solutionsVisible ? 'block' : 'none';
+    }
+}
+
+function renderSolutionsHtml() {
+    if (!currentQuestions.length) return '<p>문제가 없습니다.</p>';
+
+    return currentQuestions.map((q, i) => {
+        const answerIndex = parseInt(q.answer, 10) - 1;
+        const answerText = q.options[answerIndex] ? q.options[answerIndex].replace(/^\d\.\s*/, '') : '정답 정보 없음';
+        return `
+            <div class="solution-item">
+                <p class="solution-title">[${i + 1}] ${q.question}</p>
+                <p class="solution-answer">정답: ${q.answer}. ${answerText}</p>
+                <p class="solution-explanation">풀이: ${q.hint}</p>
+            </div>
+        `;
+    }).join('');
 }
