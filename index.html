@@ -33,9 +33,23 @@
 
     <header>
         <h1>한능검 심화 1급 </h1>
-        <div class="mode-selector">
+        <div class="mode-tabs">
+            <button class="tab-btn active" onclick="switchMode('quiz')">📝 문제 풀이</button>
+            <button class="tab-btn" onclick="switchMode('study')">📚 학습</button>
+        </div>
+        
+        <!-- 문제 풀이 모드 -->
+        <div id="quiz-mode" class="mode-selector">
             <button onclick="startStudy('전근대사')">전근대사 30</button>
             <button onclick="startStudy('근현대사')">근현대사 30</button>
+        </div>
+        
+        <!-- 학습 모드 -->
+        <div id="study-mode" class="study-selector" style="display:none;">
+            <button onclick="openStudyMap('삼국시대')">삼국시대</button>
+            <button onclick="openStudyMap('통일신라')">통일신라·발해</button>
+            <button onclick="openStudyMap('고려')">고려</button>
+            <button onclick="openStudyMap('조선')">조선</button>
         </div>
     </header>
 

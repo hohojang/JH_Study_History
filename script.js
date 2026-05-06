@@ -2,9 +2,235 @@ let currentQuestions = [];
 let currentIndex = 0;
 let score = 0;
 let solutionsVisible = false;
+let currentMode = 'quiz';
+
+function switchMode(mode) {
+    currentMode = mode;
+    const quizMode = document.getElementById('quiz-mode');
+    const studyMode = document.getElementById('study-mode');
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    
+    tabBtns.forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+    
+    if (mode === 'quiz') {
+        quizMode.style.display = 'block';
+        studyMode.style.display = 'none';
+        document.getElementById('quiz-container').innerHTML = `
+            <div class="welcome-msg">
+                학습할 범위를 선택하여 문제를 풀어보세요! <br>
+            </div>
+        `;
+    } else if (mode === 'study') {
+        quizMode.style.display = 'none';
+        studyMode.style.display = 'block';
+        document.getElementById('quiz-container').innerHTML = '';
+    }
+}
+
+function openStudyMap(period) {
+    const container = document.getElementById('quiz-container');
+    
+    // 선택한 시대의 지도와 지역 정보 표시
+    let mapHtml = '';
+    let regionsData = {};
+    
+    if (period === '삼국시대') {
+        regionsData = studyData['삼국시대'];
+        mapHtml = generateThreeKingdomsMap();
+    } else if (period === '통일신라') {
+        regionsData = studyData['통일신라·발해'];
+        mapHtml = generateUnifiedSillaMap();
+    } else if (period === '고려') {
+        regionsData = studyData['고려'];
+        mapHtml = generateGoryeoMap();
+    } else if (period === '조선') {
+        regionsData = studyData['조선'];
+        mapHtml = generateJoseonMap();
+    }
+    
+    container.innerHTML = `
+        <div class="study-container">
+            <div class="study-header">
+                <h2>${period} 학습</h2>
+                <button onclick="switchMode('study')" class="back-btn">← 돌아가기</button>
+            </div>
+            <div class="study-content">
+                <div class="map-section">
+                    ${mapHtml}
+                </div>
+                <div id="detail-panel" class="detail-panel">
+                    <div class="detail-placeholder">지역을 선택하면 상세 정보가 표시됩니다</div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // 지역별 클릭 이벤트 등록
+    for (const region in regionsData) {
+        const element = document.getElementById(`region-${region}`);
+        if (element) {
+            element.addEventListener('click', () => showRegionDetails(region, regionsData[region]));
+        }
+    }
+}
+
+function generateThreeKingdomsMap() {
+    return `
+        <div class="map-wrapper">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Three_Kingdoms_of_Korea_%283rd_century-AD%29.png/600px-Three_Kingdoms_of_Korea_%283rd_century-AD%29.png" alt="삼국시대" class="map-image">
+            <svg class="map-overlay" viewBox="0 0 600 800">
+                <!-- 고구려 클릭 영역 -->
+                <path id="region-고구려" d="M 150 80 L 550 120 L 580 380 L 280 450 L 200 350 Z" 
+                      class="map-region" data-region="고구려"/>
+                
+                <!-- 백제 클릭 영역 -->
+                <path id="region-백제" d="M 150 380 L 250 350 L 320 500 L 220 650 L 100 550 Z" 
+                      class="map-region" data-region="백제"/>
+                
+                <!-- 신라 클릭 영역 -->
+                <path id="region-신라" d="M 300 450 L 550 380 L 600 700 L 450 750 L 280 650 Z" 
+                      class="map-region" data-region="신라"/>
+            </svg>
+        </div>
+    `;
+}
+
+function generateUnifiedSillaMap() {
+    return `
+        <div class="map-wrapper">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Map_of_Later_Silla.png/600px-Map_of_Later_Silla.png" alt="통일신라" class="map-image">
+            <svg class="map-overlay" viewBox="0 0 600 800">
+                <!-- 신라 클릭 영역 -->
+                <path id="region-신라" d="M 100 100 L 550 80 L 580 750 L 80 780 Z" 
+                      class="map-region" data-region="신라"/>
+                
+                <!-- 발해 클릭 영역 -->
+                <path id="region-발해" d="M 150 50 L 450 30 L 480 200 L 200 220 Z" 
+                      class="map-region" data-region="발해"/>
+            </svg>
+        </div>
+    `;
+}
+
+function generateGoryeoMap() {
+    return `
+        <div class="map-wrapper">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Goryeo_1392.png/600px-Goryeo_1392.png" alt="고려" class="map-image">
+            <svg class="map-overlay" viewBox="0 0 600 800">
+                <!-- 시기별 구분 영역 -->
+                <rect id="region-전기" x="50" y="80" width="500" height="120" 
+                      class="map-region" data-region="전기"/>
+                <rect id="region-중기" x="50" y="210" width="500" height="140" 
+                      class="map-region" data-region="중기"/>
+                <rect id="region-무신정권" x="50" y="360" width="500" height="140" 
+                      class="map-region" data-region="무신정권"/>
+                <rect id="region-말기" x="50" y="510" width="500" height="200" 
+                      class="map-region" data-region="말기"/>
+            </svg>
+        </div>
+    `;
+}
+
+function generateJoseonMap() {
+    return `
+        <div class="map-wrapper">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Joseon_1392.png/600px-Joseon_1392.png" alt="조선" class="map-image">
+            <svg class="map-overlay" viewBox="0 0 600 800">
+                <!-- 시기별 구분 영역 -->
+                <rect id="region-건국~세종" x="50" y="50" width="500" height="130" 
+                      class="map-region" data-region="건국~세종"/>
+                <rect id="region-세조~성종" x="50" y="190" width="500" height="130" 
+                      class="map-region" data-region="세조~성종"/>
+                <rect id="region-중종~선조" x="50" y="330" width="500" height="130" 
+                      class="map-region" data-region="중종~선조"/>
+                <rect id="region-17세기" x="50" y="470" width="500" height="130" 
+                      class="map-region" data-region="17세기"/>
+            </svg>
+        </div>
+    `;
+}
+
+function showRegionDetails(region, data) {
+    const panel = document.getElementById('detail-panel');
+    
+    let detailHtml = `<div class="detail-content">
+        <h3>🗺️ ${region}</h3>
+        
+        <div class="detail-section">
+            <h4>⏰ 왕 및 시기</h4>
+            <p>${data['왕 및 시기'] || '정보 없음'}</p>
+        </div>`;
+    
+    if (data['주요인물'] && data['주요인물'].length > 0) {
+        detailHtml += `<div class="detail-section">
+            <h4>👑 주요인물</h4>
+            <ul>${data['주요인물'].map(p => `<li>${p}</li>`).join('')}</ul>
+        </div>`;
+    }
+    
+    if (data['주요 업적'] && data['주요 업적'].length > 0) {
+        detailHtml += `<div class="detail-section">
+            <h4>🏆 주요 업적</h4>
+            <ul>${data['주요 업적'].map(a => `<li>${a}</li>`).join('')}</ul>
+        </div>`;
+    }
+    
+    if (data['경제']) {
+        detailHtml += `<div class="detail-section">
+            <h4>💰 경제</h4>
+            <p>${Array.isArray(data['경제']) ? data['경제'].join(', ') : data['경제']}</p>
+        </div>`;
+    }
+    
+    if (data['사회']) {
+        detailHtml += `<div class="detail-section">
+            <h4>🏛 사회</h4>
+            <p>${Array.isArray(data['사회']) ? data['사회'].join(', ') : data['사회']}</p>
+        </div>`;
+    }
+    
+    if (data['문화']) {
+        detailHtml += `<div class="detail-section">
+            <h4>🎨 문화</h4>
+            <p>${Array.isArray(data['문화']) ? data['문화'].join(', ') : data['문화']}</p>
+        </div>`;
+    }
+    
+    if (data['종교']) {
+        detailHtml += `<div class="detail-section">
+            <h4>⛩ 종교</h4>
+            <p>${Array.isArray(data['종교']) ? data['종교'].join(', ') : data['종교']}</p>
+        </div>`;
+    }
+    
+    // 유물 섹션 추가
+    if (data['유물'] && data['유물'].length > 0) {
+        detailHtml += `<div class="detail-section artifacts-section">
+            <h4>🏺 유물 및 자료</h4>
+            <div class="artifacts-container">`;
+        
+        data['유물'].forEach(artifact => {
+            detailHtml += `<div class="artifact-item">
+                <div class="artifact-image">
+                    <img src="${artifact.img}" alt="${artifact.name}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22200%22%3E%3Crect fill=%22%23ddd%22 width=%22200%22 height=%22200%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22%23333%22 font-size=%2214%22%3E${artifact.name}%3C/text%3E%3C/svg%3E'">
+                </div>
+                <div class="artifact-info">
+                    <p class="artifact-name"><strong>${artifact.name}</strong></p>
+                    <p class="artifact-desc">${artifact.desc}</p>
+                </div>
+            </div>`;
+        });
+        
+        detailHtml += `</div></div>`;
+    }
+    
+    detailHtml += '</div>';
+    panel.innerHTML = detailHtml;
+    panel.scrollTop = 0;
+}
 
 function startStudy(category) {
-    currentQuestions = historyData.filter(q => q.category === category);
     currentIndex = 0;
     score = 0;
     solutionsVisible = false;
