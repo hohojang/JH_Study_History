@@ -49,6 +49,9 @@ function openStudyMap(period) {
     } else if (period === '조선') {
         regionsData = studyData['조선'];
         mapHtml = generateJoseonMap();
+    } else if (period === '근현대사') {
+        regionsData = studyData['근현대사'];
+        mapHtml = generateModernHistoryMap();
     }
     
     container.innerHTML = `
@@ -80,7 +83,7 @@ function openStudyMap(period) {
 function generateThreeKingdomsMap() {
     return `
         <div class="map-wrapper">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Three_Kingdoms_of_Korea_%283rd_century-AD%29.png/600px-Three_Kingdoms_of_Korea_%283rd_century-AD%29.png" alt="삼국시대" class="map-image">
+            <img src="images/maps/three-kingdoms.jpg" alt="삼국시대" class="map-image" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Three_Kingdoms_of_Korea_%283rd_century-AD%29.png/600px-Three_Kingdoms_of_Korea_%283rd_century-AD%29.png'">
             <svg class="map-overlay" viewBox="0 0 600 800">
                 <!-- 고구려 클릭 영역 -->
                 <path id="region-고구려" d="M 150 80 L 550 120 L 580 380 L 280 450 L 200 350 Z" 
@@ -101,7 +104,7 @@ function generateThreeKingdomsMap() {
 function generateUnifiedSillaMap() {
     return `
         <div class="map-wrapper">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Map_of_Later_Silla.png/600px-Map_of_Later_Silla.png" alt="통일신라" class="map-image">
+            <img src="images/maps/unified-silla.jpg" alt="통일신라" class="map-image" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Map_of_Later_Silla.png/600px-Map_of_Later_Silla.png'">
             <svg class="map-overlay" viewBox="0 0 600 800">
                 <!-- 신라 클릭 영역 -->
                 <path id="region-신라" d="M 100 100 L 550 80 L 580 750 L 80 780 Z" 
@@ -118,7 +121,7 @@ function generateUnifiedSillaMap() {
 function generateGoryeoMap() {
     return `
         <div class="map-wrapper">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Goryeo_1392.png/600px-Goryeo_1392.png" alt="고려" class="map-image">
+            <img src="images/maps/goryeo.jpg" alt="고려" class="map-image" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Goryeo_1392.png/600px-Goryeo_1392.png'">
             <svg class="map-overlay" viewBox="0 0 600 800">
                 <!-- 시기별 구분 영역 -->
                 <rect id="region-전기" x="50" y="80" width="500" height="120" 
@@ -137,7 +140,7 @@ function generateGoryeoMap() {
 function generateJoseonMap() {
     return `
         <div class="map-wrapper">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Joseon_1392.png/600px-Joseon_1392.png" alt="조선" class="map-image">
+            <img src="images/maps/joseon.jpg" alt="조선" class="map-image" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Joseon_1392.png/600px-Joseon_1392.png'">
             <svg class="map-overlay" viewBox="0 0 600 800">
                 <!-- 시기별 구분 영역 -->
                 <rect id="region-건국~세종" x="50" y="50" width="500" height="130" 
@@ -148,6 +151,25 @@ function generateJoseonMap() {
                       class="map-region" data-region="중종~선조"/>
                 <rect id="region-17세기" x="50" y="470" width="500" height="130" 
                       class="map-region" data-region="17세기"/>
+            </svg>
+        </div>
+    `;
+}
+
+function generateModernHistoryMap() {
+    return `
+        <div class="map-wrapper">
+            <img src="images/maps/modern-history.jpg" alt="근현대사" class="map-image" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Korea_1890s.png/600px-Korea_1890s.png'">
+            <svg class="map-overlay" viewBox="0 0 600 800">
+                <!-- 시기별 구분 영역 -->
+                <rect id="region-개항기" x="50" y="50" width="500" height="130" 
+                      class="map-region" data-region="개항기"/>
+                <rect id="region-일제강점기" x="50" y="190" width="500" height="130" 
+                      class="map-region" data-region="일제강점기"/>
+                <rect id="region-해방후~현대" x="50" y="330" width="500" height="130" 
+                      class="map-region" data-region="해방후~현대"/>
+                <rect id="region-민주화운동" x="50" y="470" width="500" height="130" 
+                      class="map-region" data-region="민주화운동"/>
             </svg>
         </div>
     `;
