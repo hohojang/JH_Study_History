@@ -300,6 +300,16 @@ header { text-align: center; padding: 3rem; }
     font-style: italic;
 }
 
+.study-error {
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    color: #f8fafc;
+    text-align: center;
+    font-size: 1rem;
+}
+
 .detail-content h3 {
     margin-top: 0;
     margin-bottom: 1.5rem;

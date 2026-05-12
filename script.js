@@ -40,7 +40,7 @@ function openStudyMap(period) {
     if (period === '삼국시대') {
         regionsData = studyData['삼국시대'];
         mapHtml = generateThreeKingdomsMap();
-    } else if (period === '통일신라') {
+    } else if (period === '통일신라·발해') {
         regionsData = studyData['통일신라·발해'];
         mapHtml = generateUnifiedSillaMap();
     } else if (period === '고려') {
@@ -52,6 +52,9 @@ function openStudyMap(period) {
     } else if (period === '근현대사') {
         regionsData = studyData['근현대사'];
         mapHtml = generateModernHistoryMap();
+    } else {
+        regionsData = {};
+        mapHtml = `<div class="study-error">선택한 학습 주제를 찾을 수 없습니다.</div>`;
     }
     
     container.innerHTML = `
