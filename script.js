@@ -4,14 +4,16 @@ let score = 0;
 let solutionsVisible = false;
 let currentMode = 'quiz';
 
-function switchMode(mode) {
+function switchMode(mode, event) {
     currentMode = mode;
     const quizMode = document.getElementById('quiz-mode');
     const studyMode = document.getElementById('study-mode');
     const tabBtns = document.querySelectorAll('.tab-btn');
     
     tabBtns.forEach(btn => btn.classList.remove('active'));
-    event.target.classList.add('active');
+    if (event && event.target) {
+        event.target.classList.add('active');
+    }
     
     if (mode === 'quiz') {
         quizMode.style.display = 'block';
@@ -231,11 +233,23 @@ function showRegionDetails(region, data) {
 }
 
 function startStudy(category) {
+    currentQuestions = historyData.filter(item => item.category === category);
     currentIndex = 0;
     score = 0;
     solutionsVisible = false;
     document.getElementById('score-count').innerText = score;
     document.getElementById('progress-count').innerText = 0;
+    document.getElementById('progress-total').innerText = currentQuestions.length;
+
+    if (!currentQuestions.length) {
+        document.getElementById('quiz-container').innerHTML = `
+            <div class="quiz-card" style="text-align:center;">
+                <h2>문제가 없습니다.</h2>
+                <p>선택한 범위에 해당하는 문제가 없습니다. 다른 학습 범위를 시도해 보세요.</p>
+            </div>`;
+        return;
+    }
+
     renderQuiz();
 }
 

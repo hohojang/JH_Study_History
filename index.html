@@ -10,7 +10,7 @@
     <nav>
         <div class="logo">JH_Study_History V2</div>
         <div class="stats">
-            정답: <span id="score-count">0</span> | 진도: <span id="progress-count">0</span>/60
+            정답: <span id="score-count">0</span> | 진도: <span id="progress-count">0</span>/<span id="progress-total">0</span>
         </div>
     </nav>
 
@@ -34,8 +34,8 @@
     <header>
         <h1>한능검 심화 1급 </h1>
         <div class="mode-tabs">
-            <button class="tab-btn active" onclick="switchMode('quiz')">📝 문제 풀이</button>
-            <button class="tab-btn" onclick="switchMode('study')">📚 학습</button>
+            <button class="tab-btn active" onclick="switchMode('quiz', event)">📝 문제 풀이</button>
+            <button class="tab-btn" onclick="switchMode('study', event)">📚 학습</button>
         </div>
         
         <!-- 문제 풀이 모드 -->
