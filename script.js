@@ -149,6 +149,103 @@ function renderSolutionsHtml() {
   }).join('');
 }
 
+function buildStudyMapHtml(period) {
+  const regions = studyData[period];
+  if (!regions) {
+    return `<div class="study-error">학습 데이터를 찾을 수 없습니다.</div>`;
+  }
+
+  const safePeriod = period.replace(/[\s·]/g, '').toLowerCase();
+  const mapImagePath = `images/maps/${safePeriod}.jpg`;
+
+  return `
+    <div class="study-map">
+      <div class="study-map-title">${period} 주요 학습 영역</div>
+      <div class="map-wrapper">
+        <img
+          class="map-image"
+          src="${mapImagePath}"
+          alt="${period} 지도"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+        />
+        <div class="map-placeholder">해당 시대의 지도 이미지가 준비되지 않았습니다.<br>아래 버튼으로 주요 지역을 선택하세요.</div>
+      </div>
+      <div class="region-button-grid">
+        ${Object.keys(regions).map(region => `
+          <button type="button" class="outline-btn region-btn" data-region="${region}">${region}</button>
+        `).join('')}
+      </div>
+    </div>`;
+}
+
+function generateThreeKingdomsMap() {
+  return buildStudyMapHtml('삼국시대');
+}
+
+function generateUnifiedSillaMap() {
+  return buildStudyMapHtml('통일신라·발해');
+}
+
+function generateGoryeoMap() {
+  return buildStudyMapHtml('고려');
+}
+
+function generateJoseonMap() {
+  return buildStudyMapHtml('조선');
+}
+
+function generateModernHistoryMap() {
+  return buildStudyMapHtml('근현대사');
+}
+
+function showRegionDetails(regionName, regionData) {
+  const detailPanel = document.getElementById('detail-panel');
+  if (!detailPanel) return;
+
+  const renderList = (items) => {
+    if (!items || !items.length) return '<p>정보가 없습니다.</p>';
+    return `<ul>${items.map(item => `<li>${item}</li>`).join('')}</ul>`;
+  };
+
+  const renderField = (label, value) => {
+    if (!value) return '';
+    if (Array.isArray(value)) {
+      return `<div class="detail-row"><strong>${label}</strong>${renderList(value)}</div>`;
+    }
+    return `<div class="detail-row"><strong>${label}</strong><p>${value}</p></div>`;
+  };
+
+  const renderArtifacts = (artifacts) => {
+    if (!artifacts || !artifacts.length) {
+      return '<p>유물 정보가 없습니다.</p>';
+    }
+
+    return `<div class="artifacts-container">${artifacts.map(item => `
+      <div class="artifact-card">
+        <img class="artifact-image" src="${item.img}" alt="${item.name}" onerror="this.style.display='none'" />
+        <div class="artifact-info">
+          <p class="artifact-name">${item.name}</p>
+          <p class="artifact-desc">${item.desc}</p>
+        </div>
+      </div>
+    `).join('')}</div>`;
+  };
+
+  detailPanel.innerHTML = `
+    <div class="detail-card">
+      <h3>${regionName}</h3>
+      ${renderField('시대 및 왕', regionData['왕 및 시기'])}
+      ${renderField('주요 인물', regionData['주요인물'])}
+      ${renderField('주요 업적', regionData['주요 업적'])}
+      ${renderField('주요 사료', regionData['사료'])}
+      ${renderField('경제', regionData['경제'])}
+      ${renderField('사회', regionData['사회'])}
+      ${renderField('문화', regionData['문화'])}
+      ${renderField('종교', regionData['종교'])}
+      <div class="detail-row"><strong>주요 유물</strong>${renderArtifacts(regionData['유물'])}</div>
+    </div>`;
+}
+
 function openStudyMap(period) {
   const regionsData = studyData[period] || null;
   if (!regionsData) {
